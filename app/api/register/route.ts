@@ -1,13 +1,13 @@
+// app/api/register/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import connectDB from "@/lib/mongodb"; // your DB connection
-import User from "@/database/user.model"; // your User model
+import connectDB from "@/lib/mongodb";
+import User from "@/database/user.model";
 
 export async function POST(req: NextRequest) {
   try {
-    const { email, password } = await req.json();
+    const { email, password, role } = await req.json();
 
-    // Validation
     if (!email || !password) {
       return NextResponse.json(
         { message: "Email and password are required" },
@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
 
     await connectDB();
 
-    // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json(
@@ -33,18 +32,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
+    // ✅ Allow role to be set during registration (optional)
+    // Default is "user" if not provided
+    const userRole = role === "admin" ? "admin" : "user";
+
     const user = await User.create({
       email,
       password: hashedPassword,
-      role: "user",
+      role: userRole,
     });
 
     return NextResponse.json(
-      { message: "User registered successfully", userId: user._id },
+      {
+        message: "User registered successfully",
+        userId: user._id,
+        role: user.role,
+      },
       { status: 201 },
     );
   } catch (error) {
