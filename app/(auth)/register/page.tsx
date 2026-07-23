@@ -34,9 +34,12 @@ export default function RegisterPage() {
       setTimeout(() => router.push("/login"), 1000);
     } catch (err: unknown) {
       console.error(err);
+
       if (err instanceof Error) {
         setError(err.message);
+        return;
       }
+
       setError("Registration failed");
     } finally {
       setLoading(false);
