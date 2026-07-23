@@ -37,7 +37,7 @@ export default function CreateNotePage() {
 
       // Redirect to notes list after 1.5 seconds
       setTimeout(() => {
-        router.push("/notes");
+        router.push("/dashboard/notes");
         router.refresh();
       }, 1500);
     } catch (err: any) {
