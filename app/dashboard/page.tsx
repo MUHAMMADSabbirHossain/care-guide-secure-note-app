@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LogoutBtn from "@/components/LogoutBtn";
+import Link from "next/link";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -43,6 +44,15 @@ export default function DashboardPage() {
       </p>
 
       <LogoutBtn />
+
+      <div className="my-6">
+        <Link
+          href="/dashboard/notes/create"
+          className="p-2 border-2 rounded-xl"
+        >
+          Create Note
+        </Link>
+      </div>
     </div>
   );
 }
