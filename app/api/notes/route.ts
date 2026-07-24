@@ -99,3 +99,86 @@ export async function POST(req: NextRequest) {
     );
   }
 }
+
+export async function GET(req: NextRequest) {
+  try {
+    // 1️⃣ Get token from cookies
+    const token = req.cookies.get("token")?.value;
+
+    if (!token) {
+      return NextResponse.json(
+        { message: "Authentication required" },
+        { status: 401 },
+      );
+    }
+
+    // 2️⃣ Verify token
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      return NextResponse.json(
+        { message: "Invalid or expired token" },
+        { status: 401 },
+      );
+    }
+
+    // 3️⃣ Check role
+    if (decoded.role !== "user" && decoded.role !== "admin") {
+      return NextResponse.json({ message: "Access denied" }, { status: 403 });
+    }
+
+    // 4️⃣ Get query parameters from URL
+    const { searchParams } = new URL(req.url);
+    const query = searchParams.get("query") || "";
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "5");
+
+    // 5️⃣ Validate pagination parameters
+    const validPage = page > 0 ? page : 1;
+    const validLimit = limit > 0 && limit <= 100 ? limit : 10;
+    const skip = (validPage - 1) * validLimit;
+
+    // 6️⃣ Connect to database
+    await connectDB();
+
+    // 7️⃣ Build search filter
+    const filter: any = { userId: decoded.userId };
+
+    if (query) {
+      filter.$or = [
+        { title: { $regex: query, $options: "i" } },
+        { content: { $regex: query, $options: "i" } },
+      ];
+    }
+
+    // 8️⃣ Execute queries
+    const [notes, total] = await Promise.all([
+      Note.find(filter)
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(validLimit)
+        .lean(),
+      Note.countDocuments(filter),
+    ]);
+
+    // 9️⃣ Return response with pagination metadata
+    return NextResponse.json(
+      {
+        message: "Notes fetched successfully",
+        notes,
+        pagination: {
+          total,
+          page: validPage,
+          limit: validLimit,
+          totalPages: Math.ceil(total / validLimit),
+        },
+      },
+      { status: 200 },
+    );
+  } catch (error) {
+    console.error("Fetch notes error:", error);
+    return NextResponse.json(
+      { message: "Internal server error" },
+      { status: 500 },
+    );
+  }
+}
