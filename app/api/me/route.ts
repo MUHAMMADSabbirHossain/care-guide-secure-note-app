@@ -7,6 +7,7 @@ import { getAuthUser } from "@/lib/auth";
 export async function GET(req: NextRequest) {
   try {
     const authUser = getAuthUser(req);
+    // console.log({ authUser }, authUser?.userId);
 
     if (!authUser) {
       return NextResponse.json(
@@ -15,8 +16,9 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    await connectDB();
+    await connectDB(); // Connect to MongoDB
 
+    // Get user details
     const user = await User.findById(authUser.userId).select("-password");
     if (!user) {
       return NextResponse.json({ message: "User not found" }, { status: 404 });

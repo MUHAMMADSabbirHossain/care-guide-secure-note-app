@@ -28,7 +28,7 @@ export function middleware(req: NextRequest) {
 
   // ✅ Verify token
   const decoded = verifyToken(token);
-  console.log({ decoded });
+  // console.log({ decoded });
 
   if (!decoded) {
     // Token is invalid or expired → clear cookie and redirect
