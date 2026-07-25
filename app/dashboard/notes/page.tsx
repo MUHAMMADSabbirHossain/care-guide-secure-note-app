@@ -200,13 +200,17 @@ export default function NotesPage() {
           {notes.map((note) => (
             <div
               key={note._id}
-              className="border p-4 rounded shadow-sm hover:shadow transition"
+              className="border p-4 rounded-lg shadow-sm hover:shadow transition"
             >
-              <h2 className="text-xl font-semibold">{note.title}</h2>
-              <p className="text-gray-700 mt-2 line-clamp-2">{note.content}</p>
-              <p className="text-sm text-gray-400 mt-2">
-                {new Date(note.createdAt).toLocaleString()}
-              </p>
+              <Link href={`/dashboard/notes/${note._id}`}>
+                <h2 className="text-xl font-semibold">{note.title}</h2>
+                <p className="text-gray-700 mt-2 line-clamp-2">
+                  {note.content}
+                </p>
+                <p className="text-sm text-gray-400 mt-2">
+                  {new Date(note.createdAt).toLocaleString()}
+                </p>
+              </Link>
             </div>
           ))}
         </div>
