@@ -183,7 +183,7 @@ export default function NoteDetailPage({
           {/* Actions */}
           <div className="border-t px-6 py-4 bg-gray-50 flex flex-wrap gap-3">
             <Link
-              href={`/notes/edit/${note.id}`}
+              href={`/dashboard/notes/update/${note.id}`}
               className="inline-flex items-center bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
             >
               <svg
