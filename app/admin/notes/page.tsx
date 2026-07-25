@@ -320,7 +320,7 @@ export default function AdminNotesPage() {
                     </td>
                     <td className="px-4 py-2">
                       <Link
-                        href={`/dashboard/note/${note._id}`}
+                        href={`/dashboard/notes/${note._id}`}
                         className="text-blue-600 hover:underline text-sm"
                       >
                         View

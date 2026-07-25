@@ -139,7 +139,7 @@ export default function EditNotePage({
       <div className="max-w-2xl mx-auto">
         {/* Back button */}
         <Link
-          href={`/dashboard/note/${noteId}`}
+          href={`/dashboard/notes/${noteId}`}
           className="inline-flex items-center text-blue-600 hover:text-blue-800 mb-6"
         >
           <svg
@@ -220,7 +220,7 @@ export default function EditNotePage({
               </button>
 
               <Link
-                href={`/dashboard/note/${noteId}`}
+                href={`/dashboard/notes/${noteId}`}
                 className="bg-gray-200 text-gray-700 px-6 py-2 rounded-md hover:bg-gray-300 transition"
               >
                 Cancel
