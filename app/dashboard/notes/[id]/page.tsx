@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import DeleteNoteButton from "@/components/DeleteNoteBtn";
 
 interface Note {
   id: string;
@@ -200,7 +201,7 @@ export default function NoteDetailPage({
               </svg>
               Edit Note
             </Link>
-            <button
+            {/* <button
               onClick={() => {
                 if (confirm("Are you sure you want to delete this note?")) {
                   // Delete logic here
@@ -222,7 +223,10 @@ export default function NoteDetailPage({
                 />
               </svg>
               Delete Note
-            </button>
+            </button> */}
+
+            {/* ✅ Delete Note Button */}
+            <DeleteNoteButton noteId={note.id} noteTitle={note.title} />
           </div>
         </div>
       </div>
