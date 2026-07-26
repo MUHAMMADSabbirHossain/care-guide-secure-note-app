@@ -63,6 +63,13 @@ const Navbar = () => {
           </Link>
 
           <Link
+            href="/admin"
+            className="mt-4 bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700"
+          >
+            All Users
+          </Link>
+
+          <Link
             href="/admin/notes"
             className="mt-4 bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700"
           >
