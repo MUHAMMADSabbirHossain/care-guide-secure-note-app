@@ -28,6 +28,11 @@ const Navbar = () => {
 
       <div>
         <h2>Regular User</h2>
+        <div>
+          <p>Test Email: five@test.com</p>
+          <p>Test Password: 12345678</p>
+        </div>
+
         <div className="border border-white rounded-lg flex flex-wrap gap-4 p-2">
           <Link
             href="/dashboard"
@@ -55,6 +60,11 @@ const Navbar = () => {
       <div>
         <h2>Admin User</h2>
         <div className="border border-white rounded-lg flex flex-wrap gap-4 p-2">
+          <div>
+            <p>Test Email: one@test.com</p>
+            <p>Test Password: 12345678</p>
+          </div>
+
           <Link
             href="/admin"
             className="mt-4 bg-sky-600 text-white px-4 py-2 rounded hover:bg-sky-700"
